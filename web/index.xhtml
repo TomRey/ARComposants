@@ -3,12 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <title>ARComposant</title>
+        <h:outputStylesheet name="css/materialize.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
+          <nav>
+            <div class="nav-wrapper">
+              <a href="/ARComposants" class="brand-logo">ARComposant</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><h:link outcome="/composant/List" value="List Composant"/></li>
+                <li><h:link outcome="/composant/Create" value="New Composant"/></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+              </ul>
+            </div>
+          </nav>
+        
         <h:link outcome="/commandeFm/List" value="Show All CommandeFm Items"/>
         <br />
         <h:link outcome="/commandePm/List" value="Show All CommandePm Items"/>

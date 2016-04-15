@@ -7,13 +7,21 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">Default Title</ui:insert></title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="materialize.css"/>
     </h:head>
 
     <h:body>
-        <h1>
-            <ui:insert name="title">Default Title</ui:insert>
-        </h1>
+        <nav>
+            <div class="nav-wrapper">
+              <a href="/ARComposants" class="brand-logo">ARComposant</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><h:link outcome="/composant/List" value="List Composant"/></li>
+                <li><h:link outcome="/composant/Create" value="New Composant"/></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+              </ul>
+            </div>
+          </nav>
         <p>
             <ui:insert name="body">Default Body</ui:insert>
         </p>
