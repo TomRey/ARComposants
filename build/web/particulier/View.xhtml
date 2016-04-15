@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewParticulierTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewParticulierLabel_id}"/>
+                    <h:outputText value="#{particulierController.selected.id}" title="#{bundle.ViewParticulierTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewParticulierLabel_identite}"/>
+                    <h:outputText value="#{particulierController.selected.identite}" title="#{bundle.ViewParticulierTitle_identite}"/>
+                    <h:outputText value="#{bundle.ViewParticulierLabel_nom}"/>
+                    <h:outputText value="#{particulierController.selected.nom}" title="#{bundle.ViewParticulierTitle_nom}"/>
+                    <h:outputText value="#{bundle.ViewParticulierLabel_prenom}"/>
+                    <h:outputText value="#{particulierController.selected.prenom}" title="#{bundle.ViewParticulierTitle_prenom}"/>
+                    <h:outputText value="#{bundle.ViewParticulierLabel_adresse}"/>
+                    <h:outputText value="#{particulierController.selected.adresse}" title="#{bundle.ViewParticulierTitle_adresse}"/>
+                    <h:outputText value="#{bundle.ViewParticulierLabel_mail}"/>
+                    <h:outputText value="#{particulierController.selected.mail}" title="#{bundle.ViewParticulierTitle_mail}"/>
+                    <h:outputText value="#{bundle.ViewParticulierLabel_telephone}"/>
+                    <h:outputText value="#{particulierController.selected.telephone}" title="#{bundle.ViewParticulierTitle_telephone}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{particulierController.destroyAndView}" value="#{bundle.ViewParticulierDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewParticulierEditLink}"/>
+                <br />
+                <h:commandLink action="#{particulierController.prepareCreate}" value="#{bundle.ViewParticulierCreateLink}" />
+                <br />
+                <h:commandLink action="#{particulierController.prepareList}" value="#{bundle.ViewParticulierShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewParticulierIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

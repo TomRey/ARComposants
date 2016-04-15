@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCommandeFmTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCommandeFmLabel_commandeFmPK_idFournisseur}" for="commandeFmPK_idFournisseur" />
+                    <h:inputText id="commandeFmPK_idFournisseur" value="#{commandeFmController.selected.commandeFmPK.idFournisseur}" title="#{bundle.CreateCommandeFmTitle_commandeFmPK_idFournisseur}" required="true" requiredMessage="#{bundle.CreateCommandeFmRequiredMessage_commandeFmPK_idFournisseur}"/>
+                    <h:outputLabel value="#{bundle.CreateCommandeFmLabel_commandeFmPK_idComposant}" for="commandeFmPK_idComposant" />
+                    <h:inputText id="commandeFmPK_idComposant" value="#{commandeFmController.selected.commandeFmPK.idComposant}" title="#{bundle.CreateCommandeFmTitle_commandeFmPK_idComposant}" required="true" requiredMessage="#{bundle.CreateCommandeFmRequiredMessage_commandeFmPK_idComposant}"/>
+                    <h:outputLabel value="#{bundle.CreateCommandeFmLabel_idMagasin}" for="idMagasin" />
+                    <h:inputText id="idMagasin" value="#{commandeFmController.selected.idMagasin}" title="#{bundle.CreateCommandeFmTitle_idMagasin}" required="true" requiredMessage="#{bundle.CreateCommandeFmRequiredMessage_idMagasin}"/>
+                    <h:outputLabel value="#{bundle.CreateCommandeFmLabel_quantite}" for="quantite" />
+                    <h:inputText id="quantite" value="#{commandeFmController.selected.quantite}" title="#{bundle.CreateCommandeFmTitle_quantite}" required="true" requiredMessage="#{bundle.CreateCommandeFmRequiredMessage_quantite}"/>
+                    <h:outputLabel value="#{bundle.CreateCommandeFmLabel_date}" for="date" />
+                    <h:inputText id="date" value="#{commandeFmController.selected.date}" title="#{bundle.CreateCommandeFmTitle_date}" required="true" requiredMessage="#{bundle.CreateCommandeFmRequiredMessage_date}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{commandeFmController.create}" value="#{bundle.CreateCommandeFmSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{commandeFmController.prepareList}" value="#{bundle.CreateCommandeFmShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateCommandeFmIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

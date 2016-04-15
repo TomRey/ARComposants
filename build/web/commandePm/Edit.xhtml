@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditCommandePmTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditCommandePmLabel_commandePmPK_idComposant}" for="commandePmPK_idComposant" />
+                    <h:inputText id="commandePmPK_idComposant" value="#{commandePmController.selected.commandePmPK.idComposant}" title="#{bundle.EditCommandePmTitle_commandePmPK_idComposant}" required="true" requiredMessage="#{bundle.EditCommandePmRequiredMessage_commandePmPK_idComposant}"/>
+                    <h:outputLabel value="#{bundle.EditCommandePmLabel_commandePmPK_idMagasin}" for="commandePmPK_idMagasin" />
+                    <h:inputText id="commandePmPK_idMagasin" value="#{commandePmController.selected.commandePmPK.idMagasin}" title="#{bundle.EditCommandePmTitle_commandePmPK_idMagasin}" required="true" requiredMessage="#{bundle.EditCommandePmRequiredMessage_commandePmPK_idMagasin}"/>
+                    <h:outputLabel value="#{bundle.EditCommandePmLabel_idParticulier}" for="idParticulier" />
+                    <h:inputText id="idParticulier" value="#{commandePmController.selected.idParticulier}" title="#{bundle.EditCommandePmTitle_idParticulier}" required="true" requiredMessage="#{bundle.EditCommandePmRequiredMessage_idParticulier}"/>
+                    <h:outputLabel value="#{bundle.EditCommandePmLabel_quantite}" for="quantite" />
+                    <h:inputText id="quantite" value="#{commandePmController.selected.quantite}" title="#{bundle.EditCommandePmTitle_quantite}" required="true" requiredMessage="#{bundle.EditCommandePmRequiredMessage_quantite}"/>
+                    <h:outputLabel value="#{bundle.EditCommandePmLabel_date}" for="date" />
+                    <h:inputText id="date" value="#{commandePmController.selected.date}" title="#{bundle.EditCommandePmTitle_date}" required="true" requiredMessage="#{bundle.EditCommandePmRequiredMessage_date}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                </h:panelGrid>
+                <h:commandLink action="#{commandePmController.update}" value="#{bundle.EditCommandePmSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditCommandePmViewLink}"/>
+                <br />
+                <h:commandLink action="#{commandePmController.prepareList}" value="#{bundle.EditCommandePmShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditCommandePmIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

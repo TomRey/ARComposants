@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewComposantTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewComposantLabel_id}"/>
+                    <h:outputText value="#{composantController.selected.id}" title="#{bundle.ViewComposantTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewComposantLabel_idType}"/>
+                    <h:outputText value="#{composantController.selected.idType}" title="#{bundle.ViewComposantTitle_idType}"/>
+                    <h:outputText value="#{bundle.ViewComposantLabel_nom}"/>
+                    <h:outputText value="#{composantController.selected.nom}" title="#{bundle.ViewComposantTitle_nom}"/>
+                    <h:outputText value="#{bundle.ViewComposantLabel_marque}"/>
+                    <h:outputText value="#{composantController.selected.marque}" title="#{bundle.ViewComposantTitle_marque}"/>
+                    <h:outputText value="#{bundle.ViewComposantLabel_description}"/>
+                    <h:outputText value="#{composantController.selected.description}" title="#{bundle.ViewComposantTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewComposantLabel_prix}"/>
+                    <h:outputText value="#{composantController.selected.prix}" title="#{bundle.ViewComposantTitle_prix}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{composantController.destroyAndView}" value="#{bundle.ViewComposantDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewComposantEditLink}"/>
+                <br />
+                <h:commandLink action="#{composantController.prepareCreate}" value="#{bundle.ViewComposantCreateLink}" />
+                <br />
+                <h:commandLink action="#{composantController.prepareList}" value="#{bundle.ViewComposantShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewComposantIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

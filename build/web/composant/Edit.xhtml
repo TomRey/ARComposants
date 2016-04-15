@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditComposantTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditComposantLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{composantController.selected.id}" title="#{bundle.EditComposantTitle_id}" required="true" requiredMessage="#{bundle.EditComposantRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditComposantLabel_idType}" for="idType" />
+                    <h:inputText id="idType" value="#{composantController.selected.idType}" title="#{bundle.EditComposantTitle_idType}" required="true" requiredMessage="#{bundle.EditComposantRequiredMessage_idType}"/>
+                    <h:outputLabel value="#{bundle.EditComposantLabel_nom}" for="nom" />
+                    <h:inputText id="nom" value="#{composantController.selected.nom}" title="#{bundle.EditComposantTitle_nom}" required="true" requiredMessage="#{bundle.EditComposantRequiredMessage_nom}"/>
+                    <h:outputLabel value="#{bundle.EditComposantLabel_marque}" for="marque" />
+                    <h:inputText id="marque" value="#{composantController.selected.marque}" title="#{bundle.EditComposantTitle_marque}" required="true" requiredMessage="#{bundle.EditComposantRequiredMessage_marque}"/>
+                    <h:outputLabel value="#{bundle.EditComposantLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{composantController.selected.description}" title="#{bundle.EditComposantTitle_description}" required="true" requiredMessage="#{bundle.EditComposantRequiredMessage_description}"/>
+                    <h:outputLabel value="#{bundle.EditComposantLabel_prix}" for="prix" />
+                    <h:inputText id="prix" value="#{composantController.selected.prix}" title="#{bundle.EditComposantTitle_prix}" required="true" requiredMessage="#{bundle.EditComposantRequiredMessage_prix}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{composantController.update}" value="#{bundle.EditComposantSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditComposantViewLink}"/>
+                <br />
+                <h:commandLink action="#{composantController.prepareList}" value="#{bundle.EditComposantShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditComposantIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
