@@ -1,9 +1,9 @@
-package facades;
+package controllers;
 
 import entities.Magasin;
 import facades.util.JsfUtil;
 import facades.util.PaginationHelper;
-import controllers.MagasinFacade;
+import facade.MagasinFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ public class MagasinController implements Serializable {
     private Magasin current;
     private DataModel items = null;
     @EJB
-    private controllers.MagasinFacade ejbFacade;
+    private facade.MagasinFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 

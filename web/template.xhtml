@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -17,8 +18,14 @@
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><h:link outcome="/composant/List" value="List Composant"/></li>
                 <li><h:link outcome="/composant/Create" value="New Composant"/></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
+                <c:if test="${!empty request.remoteUser}">
+                    <li><h:link outcome="/composant/List" value="${request.remoteUser}"/></li>
+                    <li><h:link outcome="/ARComposants" value="${request.logout()}"/></li>
+                </c:if>
+                <c:if test="${empty request.remoteUser}">
+                    <li><h:link outcome="/login" value="Login"/></li>
+                    <li><h:link outcome="/register" value="Register"/></li>
+                </c:if>
               </ul>
             </div>
           </nav>

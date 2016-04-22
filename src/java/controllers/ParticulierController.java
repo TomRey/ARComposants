@@ -1,9 +1,9 @@
-package facades;
+package controllers;
 
-import entities.CommandePm;
+import entities.Particulier;
 import facades.util.JsfUtil;
 import facades.util.PaginationHelper;
-import controllers.CommandePmFacade;
+import facade.ParticulierFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,30 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "commandePmController")
+@ManagedBean(name = "particulierController")
 @SessionScoped
-public class CommandePmController implements Serializable {
+public class ParticulierController implements Serializable {
 
-    private CommandePm current;
+    private Particulier current;
     private DataModel items = null;
     @EJB
-    private controllers.CommandePmFacade ejbFacade;
+    private facade.ParticulierFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CommandePmController() {
+    public ParticulierController() {
     }
 
-    public CommandePm getSelected() {
+    public Particulier getSelected() {
         if (current == null) {
-            current = new CommandePm();
-            current.setCommandePmPK(new entities.CommandePmPK());
+            current = new Particulier();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CommandePmFacade getFacade() {
+    private ParticulierFacade getFacade() {
         return ejbFacade;
     }
 
@@ -69,14 +68,13 @@ public class CommandePmController implements Serializable {
     }
 
     public String prepareView() {
-        current = (CommandePm) getItems().getRowData();
+        current = (Particulier) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new CommandePm();
-        current.setCommandePmPK(new entities.CommandePmPK());
+        current = new Particulier();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -84,7 +82,7 @@ public class CommandePmController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CommandePmCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticulierCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -93,7 +91,7 @@ public class CommandePmController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (CommandePm) getItems().getRowData();
+        current = (Particulier) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -101,7 +99,7 @@ public class CommandePmController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CommandePmUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticulierUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -110,7 +108,7 @@ public class CommandePmController implements Serializable {
     }
 
     public String destroy() {
-        current = (CommandePm) getItems().getRowData();
+        current = (Particulier) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -134,7 +132,7 @@ public class CommandePmController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CommandePmDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticulierDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -190,36 +188,28 @@ public class CommandePmController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = CommandePm.class)
-    public static class CommandePmControllerConverter implements Converter {
-
-        private static final String SEPARATOR = "#";
-        private static final String SEPARATOR_ESCAPED = "\\#";
+    @FacesConverter(forClass = Particulier.class)
+    public static class ParticulierControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CommandePmController controller = (CommandePmController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "commandePmController");
+            ParticulierController controller = (ParticulierController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "particulierController");
             return controller.ejbFacade.find(getKey(value));
         }
 
-        entities.CommandePmPK getKey(String value) {
-            entities.CommandePmPK key;
-            String values[] = value.split(SEPARATOR_ESCAPED);
-            key = new entities.CommandePmPK();
-            key.setIdComposant(Integer.parseInt(values[0]));
-            key.setIdMagasin(Integer.parseInt(values[1]));
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(entities.CommandePmPK value) {
+        String getStringKey(java.lang.Integer value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value.getIdComposant());
-            sb.append(SEPARATOR);
-            sb.append(value.getIdMagasin());
+            sb.append(value);
             return sb.toString();
         }
 
@@ -228,11 +218,11 @@ public class CommandePmController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof CommandePm) {
-                CommandePm o = (CommandePm) object;
-                return getStringKey(o.getCommandePmPK());
+            if (object instanceof Particulier) {
+                Particulier o = (Particulier) object;
+                return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CommandePm.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Particulier.class.getName());
             }
         }
 

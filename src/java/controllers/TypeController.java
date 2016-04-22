@@ -1,9 +1,9 @@
-package facades;
+package controllers;
 
-import entities.Particulier;
+import entities.Type;
 import facades.util.JsfUtil;
 import facades.util.PaginationHelper;
-import controllers.ParticulierFacade;
+import facade.TypeFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "particulierController")
+@ManagedBean(name = "typeController")
 @SessionScoped
-public class ParticulierController implements Serializable {
+public class TypeController implements Serializable {
 
-    private Particulier current;
+    private Type current;
     private DataModel items = null;
     @EJB
-    private controllers.ParticulierFacade ejbFacade;
+    private facade.TypeFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public ParticulierController() {
+    public TypeController() {
     }
 
-    public Particulier getSelected() {
+    public Type getSelected() {
         if (current == null) {
-            current = new Particulier();
+            current = new Type();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private ParticulierFacade getFacade() {
+    private TypeFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class ParticulierController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Particulier) getItems().getRowData();
+        current = (Type) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Particulier();
+        current = new Type();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class ParticulierController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticulierCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class ParticulierController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Particulier) getItems().getRowData();
+        current = (Type) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class ParticulierController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticulierUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class ParticulierController implements Serializable {
     }
 
     public String destroy() {
-        current = (Particulier) getItems().getRowData();
+        current = (Type) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class ParticulierController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticulierDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,16 +188,16 @@ public class ParticulierController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Particulier.class)
-    public static class ParticulierControllerConverter implements Converter {
+    @FacesConverter(forClass = Type.class)
+    public static class TypeControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ParticulierController controller = (ParticulierController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "particulierController");
+            TypeController controller = (TypeController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "typeController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -218,11 +218,11 @@ public class ParticulierController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Particulier) {
-                Particulier o = (Particulier) object;
+            if (object instanceof Type) {
+                Type o = (Type) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Particulier.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Type.class.getName());
             }
         }
 

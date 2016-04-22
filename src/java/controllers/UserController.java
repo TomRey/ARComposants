@@ -1,9 +1,9 @@
-package facades;
+package controllers;
 
 import entities.User;
 import facades.util.JsfUtil;
 import facades.util.PaginationHelper;
-import controllers.UserFacade;
+import facade.UserFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ public class UserController implements Serializable {
     private User current;
     private DataModel items = null;
     @EJB
-    private controllers.UserFacade ejbFacade;
+    private facade.UserFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 

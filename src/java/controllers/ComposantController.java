@@ -1,9 +1,9 @@
-package facades;
+package controllers;
 
-import entities.Type;
+import entities.Composant;
 import facades.util.JsfUtil;
 import facades.util.PaginationHelper;
-import controllers.TypeFacade;
+import facade.ComposantFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "typeController")
+@ManagedBean(name = "composantController")
 @SessionScoped
-public class TypeController implements Serializable {
+public class ComposantController implements Serializable {
 
-    private Type current;
+    private Composant current;
     private DataModel items = null;
     @EJB
-    private controllers.TypeFacade ejbFacade;
+    private facade.ComposantFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public TypeController() {
+    public ComposantController() {
     }
 
-    public Type getSelected() {
+    public Composant getSelected() {
         if (current == null) {
-            current = new Type();
+            current = new Composant();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private TypeFacade getFacade() {
+    private ComposantFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class TypeController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Type) getItems().getRowData();
+        current = (Composant) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Type();
+        current = new Composant();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class TypeController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ComposantCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class TypeController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Type) getItems().getRowData();
+        current = (Composant) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class TypeController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ComposantUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class TypeController implements Serializable {
     }
 
     public String destroy() {
-        current = (Type) getItems().getRowData();
+        current = (Composant) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class TypeController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ComposantDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,16 +188,16 @@ public class TypeController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Type.class)
-    public static class TypeControllerConverter implements Converter {
+    @FacesConverter(forClass = Composant.class)
+    public static class ComposantControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TypeController controller = (TypeController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "typeController");
+            ComposantController controller = (ComposantController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "composantController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -218,11 +218,11 @@ public class TypeController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Type) {
-                Type o = (Type) object;
+            if (object instanceof Composant) {
+                Composant o = (Composant) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Type.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Composant.class.getName());
             }
         }
 
